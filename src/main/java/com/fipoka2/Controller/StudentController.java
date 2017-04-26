@@ -4,7 +4,10 @@ import com.fipoka2.Entity.Student;
 import com.fipoka2.Service.StudentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +34,10 @@ public class StudentController
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+
     public String deleteStudentById(@PathVariable("id") int id){
             studentService.removeStudentById(id);
-            return "deleted";
+            return "1111";
     }
 
     @RequestMapping(method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -43,13 +47,13 @@ public class StudentController
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String insertStudent(@RequestBody Student student){
+    public ResponseEntity<?> insertStudent(@RequestBody Student student){
         studentService.insertStudent(student);
-        return "inserted";
+        return new ResponseEntity<>("it is ok",HttpStatus.OK);
     }
-
-    @RequestMapping(value = "/byCourse/{name}",method = RequestMethod.GET)
-    public Collection<String> getStudentByCourse(@PathVariable String name){
+    @RequestMapping(value = "/byCourse/{username}",method = RequestMethod.GET)
+    @PreAuthorize("authentication.name == #name " )
+    public Collection<String> getStudentByCourse(@PathVariable("username") String name){
         return studentService.getStudentsByCourse(name);
     }
 

@@ -25,12 +25,13 @@ public class MyAuthenticationEntryPoint extends BasicAuthenticationEntryPoint
         response.addHeader("WWW-Authenticate", "Basic realm=" +getRealmName());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         PrintWriter writer = response.getWriter();
-        writer.println("HTTP Status 401 - " + authEx.getMessage());
+        writer.println("HTTP Status 401 - STOP RIGHT THERE, CRIMINAL SCUM! Nobody breaks the law on " +
+                "MY watch! " + authEx.getMessage());
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        setRealmName("DeveloperStack");
+        setRealmName("Sanctuary");
         super.afterPropertiesSet();
     }
 
