@@ -1,5 +1,7 @@
 package com.fipoka2.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by Dmitry on 29.03.2017.
  */
@@ -7,6 +9,8 @@ public class Student
 {
     private int id;
     private String name;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String course;
 
     public Student(int id, String name, String course)
@@ -37,6 +41,7 @@ public class Student
     {
         this.name = name;
     }
+
 
     public String getCourse()
     {

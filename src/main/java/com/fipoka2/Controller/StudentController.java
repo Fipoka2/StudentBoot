@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +24,11 @@ public class StudentController
     @Autowired
     private StudentService studentService;
 
+
+
     @RequestMapping(method = RequestMethod.GET)
     public Collection<Student> getAllStudents(){
+        System.out.println(getName());
         return studentService.getAllStudents();
     }
 
@@ -55,6 +59,12 @@ public class StudentController
     @PreAuthorize("authentication.name == #name " )
     public Collection<String> getStudentByCourse(@PathVariable("username") String name){
         return studentService.getStudentsByCourse(name);
+    }
+
+
+    private String getName()
+    {
+        return (SecurityContextHolder.getContext().getAuthentication()).getName();
     }
 
 }
